@@ -1,5 +1,9 @@
 var express=require('express');
 var bodyParser=require('body-parser');
+///////////////////////////////code by sattari
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/APA";
+//////////////////////////////////////end
 const site=8080;
 
 var app=express();
@@ -10,6 +14,17 @@ app.post('/checkLogin',urlencodedParser,function(req,res)
 {
     //check if datas are right:
     //attention: username and NC are diffrent you must check both!
+    ////////////////////////////////////////coded by sattari 
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var query = { /**/ }; 
+  db.collection("Noskheban").findone(query,function(err, result) {// query name is fake
+    if (err) throw err;// dorost shavad
+    console.log(result);
+    db.close();
+  });
+});
+    ///////////////////////////////////////end
     /////////////////////////////////
     //ina alakian va badan dorost mishan:
     if(req.body.NC=='parto' && req.body.pass==222)
