@@ -18,7 +18,7 @@ app.post('/checkLogin',urlencodedParser,function(req,res)
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
       var query = { /**/ }; 
-  db.collection("Noskheban").findone(query,function(err, result) {// query name is fake
+  db.collection("Noskheban").findone(query,function(err, result) {// mongodb name is fake
     if (err) throw err;// dorost shavad
     console.log(result);
     db.close();
@@ -41,7 +41,17 @@ app.post('/register',urlencodedParser,function(req,res)
     //will return false if nc/username are REPETITIVE 
     //return all data's in json formatt otherwise
     ///////////////////////
-   
+   ////////////////////////////code by sattari
+   MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+         var myobj = { /*name: "Company Inc", address: "Highway 37"*/ };//dorodtshavad
+        db.collection("Noskheban").insertOne(myobj, function(err, result) {//mongodb name is fake
+        if (err) throw err;
+            console.log("1 document inserted");
+        db.close();
+    });
+});
+   ////////////////////////////end
     //tekrari bood:
     if(req.body.NC=='parto')
     //////////////////////
