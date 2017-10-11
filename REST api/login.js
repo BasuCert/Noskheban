@@ -1,6 +1,5 @@
 var express=require('express');
 var bodyParser=require('body-parser');
-//test for commite
 ///////////////////////////////code by sattari
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/APA";
@@ -18,21 +17,20 @@ app.post('/checkLogin',urlencodedParser,function(req,res)
     ////////////////////////////////////////coded by sattari 
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
-      var query = { /**/ }; 
+      var query = {$or:[{NC:req.body.NC },{user:req.body.NC}]}; 
   db.collection("Noskheban").findone(query,function(err, result) {// mongodb name is fake
-    if (err) throw err;// dorost shavad
+    if (err) 
+        res.end("false");
+    else if(result.body.pass==req.body.pass)
+        res.end("true");
+    else
+        res.end("false");
     console.log(result);
     db.close();
   });
 });
     ///////////////////////////////////////end
-    /////////////////////////////////
-    //ina alakian va badan dorost mishan:
-    if(req.body.NC=='parto' && req.body.pass==222)
-    /////////////////////////////////
-        res.end("true");
-    else
-        res.end("false");
+   
 });
 
 app.post('/register',urlencodedParser,function(req,res)
